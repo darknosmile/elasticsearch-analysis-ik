@@ -1,6 +1,15 @@
 IK Analysis for Elasticsearch
 =============================
 
+Future
+-------
+修改Analyzer和Tokenizer的 注册逻辑.
+
+使用IKAnalyzer.properties配置需要注册的analyzer以及和其对于的词典文件.
+
+达到不同Index对应不同的词典的目的.
+
+
 The IK Analysis plugin integrates Lucene IK analyzer (http://code.google.com/p/ik-analyzer/) into elasticsearch, support customized dictionary.
 
 Analyzer: `ik_smart` , `ik_max_word` , Tokenizer: `ik_smart` , `ik_max_word` 
