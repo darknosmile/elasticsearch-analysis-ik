@@ -9,6 +9,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.elasticsearch.common.logging.ESLogger;
 import org.elasticsearch.common.logging.Loggers;
+import org.wltea.analyzer.cfg.Configuration;
 
 public class Monitor implements Runnable {
 
@@ -28,9 +29,15 @@ public class Monitor implements Runnable {
 	 * 请求地址
 	 */
 	private String location;
+	
+	/*
+	 *配置 
+	 */
+	private Configuration configuration;
 
-	public Monitor(String location) {
+	public Monitor(String location,Configuration configuration) {
 		this.location = location;
+		this.configuration = configuration;
 		this.last_modified = null;
 		this.eTags = null;
 	}
@@ -72,7 +79,8 @@ public class Monitor implements Runnable {
 						||((response.getLastHeader("ETag")!=null) && !response.getLastHeader("ETag").getValue().equalsIgnoreCase(eTags))) {
 
 					// 远程词库有更新,需要重新加载词典，并修改last_modified,eTags
-					Dictionary.getSingleton().reLoadMainDict();
+					//Dictionary.getSingleton().reLoadMainDict();
+					Dictionarys.getSingleton(configuration.getDicFileXml()).reLoadMainDict();
 					last_modified = response.getLastHeader("Last-Modified")==null?null:response.getLastHeader("Last-Modified").getValue();
 					eTags = response.getLastHeader("ETag")==null?null:response.getLastHeader("ETag").getValue();
 				}

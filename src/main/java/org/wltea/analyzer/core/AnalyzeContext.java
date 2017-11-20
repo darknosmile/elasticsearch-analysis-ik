@@ -34,6 +34,7 @@ import java.util.Set;
 
 import org.wltea.analyzer.cfg.Configuration;
 import org.wltea.analyzer.dic.Dictionary;
+import org.wltea.analyzer.dic.Dictionarys;
 
 /**
  * 
@@ -313,7 +314,8 @@ class AnalyzeContext {
 		while(result != null){
     		//数量词合并
     		this.compound(result);
-    		if(Dictionary.getSingleton().isStopWord(this.segmentBuff ,  result.getBegin() , result.getLength())){
+    		
+    		if(Dictionarys.getSingleton(cfg.getDicFileXml()).isStopWord(this.segmentBuff ,  result.getBegin() , result.getLength())){
        			//是停止词继续取列表的下一个
     			result = this.results.pollFirst(); 				
     		}else{
